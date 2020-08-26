@@ -27,7 +27,6 @@ const initDB = async () => {
     console.log(err.stack);
   } finally {
     client.end();
-    console.log("Client connection terminated");
   }
 };
 
@@ -41,6 +40,16 @@ const queryDB = async (query) => {
   const res = await client.query(query);
   client.end();
   return res.rows;
+};
+
+const addTransaction = async (price, type) => {
+  const query = `
+    INSERT INTO transactions (bid, type) VALUES (${price + ""}, ${type});
+  `;
+  const client = newClient();
+  client.connect();
+  const res = await client.query(query);
+  client.end();
 };
 
 module.exports = { initDB, newClient, queryDB };
