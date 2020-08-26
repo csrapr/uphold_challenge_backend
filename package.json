@@ -4,12 +4,15 @@
   "description": "back end challenge for uphold junior back end dev",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "cesar augusto",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.20.0",
     "pg": "^8.3.2"
+  },
+  "devDependencies": {
+    "jest": "^26.4.2"
   }
 }
