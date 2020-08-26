@@ -1,5 +1,6 @@
 const { Client } = require("pg");
 
+//TODO move to .env
 const credentials = {
   user: "postgres",
   host: "localhost",
@@ -34,22 +35,47 @@ const newClient = () => {
   return new Client(credentials);
 };
 
-const queryDB = async (query) => {
+//TODO add try catch
+/* const queryDB = async (query) => {
   const client = newClient();
   client.connect();
   const res = await client.query(query);
   client.end();
   return res.rows;
+}; */
+
+const getLatestTransaction = async () => {
+  const text = `select * from transactions order by id desc limit 1;`;
+  try {
+    const client = newClient();
+    client.connect();
+    const res = await client.query(text);
+    client.end();
+    return res.rows;
+  } catch (err) {
+    console.log(err.stack);
+    client.end();
+  }
 };
 
 const addTransaction = async (price, type) => {
-  const query = `
-    INSERT INTO transactions (bid, type) VALUES (${price + ""}, ${type});
+  const text = `
+    INSERT INTO transactions (bid, type) VALUES ($1, $2);
   `;
-  const client = newClient();
-  client.connect();
-  const res = await client.query(query);
-  client.end();
+  values = [price, type];
+
+  try {
+    const client = newClient();
+    client.connect();
+    await client.query(text, values);
+    console.log(
+      `Transaction of price ${price} and type ${type} added do database.`
+    );
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    client.end();
+  }
 };
 
-module.exports = { initDB, newClient, queryDB };
+module.exports = { initDB, newClient, addTransaction, getLatestTransaction };
