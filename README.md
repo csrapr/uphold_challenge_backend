@@ -23,6 +23,9 @@ Uphold junior backend dev challenge
   port: 5432,
 };`
 
+### Example of a transaction that triggered a 0.005% profit margin target
+![Imgur Image](https://i.imgur.com/woGltLK.png)
+
 # 2 - Install necessary modules
 - In the project root, run the command `npm i`
 
