@@ -27,7 +27,7 @@ Uphold junior backend dev challenge
 - In the project root, run the command `npm i`
 
 # 3 - Run the script
-- Type node `index.js` in the project root
+- Run the command `index.js` in the project root
 
 # 4 - Test the script using jest
-- Type `npm test` in the project root
+- Run the command `npm test` in the project root
