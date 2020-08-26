@@ -13,6 +13,8 @@ const Database = require("./Database");
 //if it's a sale, try to buy
 //log every transaction to DB
 
+const targetProfit = 0.05; //target profit for every sale in percentage/100. For example for a 5% profit target you put 0.05
+
 let sessionProfit = 0;
 let targetSale = 0;
 let targetPurchase = Infinity;
@@ -26,7 +28,7 @@ const purchaseBTC = (price) => {
   if (targetPurchase === 0 || price <= targetPurchase) {
     sessionProfit -= price;
     latestPurchase = price;
-    targetSale = price * 1.00000005;
+    targetSale = price * (1 + targetProfit);
     tryingToBuy = false;
     console.log(
       `Purchased. Price: ${latestPurchase}. Target Price: ${targetPurchase}. Current money: ${sessionProfit}`
@@ -44,7 +46,7 @@ const sellBTC = (price) => {
   if (price >= targetSale) {
     sessionProfit += price;
     tryingToBuy = true;
-    targetPurchase = 0.99999995 * price;
+    targetPurchase = price * (1 - targetProfit);
     console.log(
       `Sold. Price: ${price}. Target Sale Price: ${targetSale}. Profit: ${
         (price / latestPurchase - 1) * 100
@@ -73,11 +75,11 @@ const setup = async () => {
   switch (row[0].type) {
     case "sale":
       tryingToBuy = true;
-      targetPurchase = 0.99999995 * parseFloat(row[0].bid);
+      targetPurchase = (1 - targetProfit) * parseFloat(row[0].bid);
       break;
     case "purchase":
       tryingToBuy = false;
-      targetSale = 1.00000005 * parseFloat(row[0].bid);
+      targetSale = (1 + targetProfit) * parseFloat(row[0].bid);
       latestPurchase = parseFloat(row[0].bid);
       break;
     default:
