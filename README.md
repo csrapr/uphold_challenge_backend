@@ -27,6 +27,7 @@ Uphold junior backend dev challenge
 ![Imgur Image](https://i.imgur.com/woGltLK.png)
 
 # 2 - Install necessary modules
+- My node version is 12.18.3LTS
 - In the project root, run the command `npm i`
 
 # 3 - Run the script
