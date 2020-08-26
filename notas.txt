@@ -1,0 +1,5 @@
+postgres:
+1 - no terminal fiz pgsql -U postgres
+2 - introduzi a password
+3 - CREATE DATABASE uphold_challenge_cesar;
+4 - \l para listar as bases de dados e confirmar que o comando foi bem sucedido
